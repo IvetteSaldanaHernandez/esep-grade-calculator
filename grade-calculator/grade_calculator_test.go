@@ -129,3 +129,36 @@ func TestGradeTypeString(t *testing.T) {
 		}
 	}
 }
+
+
+func TestPassFailPass(t *testing.T) {
+	calculator := NewGradeCalculator()
+
+	// Enable Pass/Fail evaluation.
+	calculator.passFail = true
+
+	calculator.AddGrade("Assignment", 85, Assignment)
+	calculator.AddGrade("Exam", 80, Exam)
+	calculator.AddGrade("Essay", 75, Essay)
+
+	actual := calculator.GetFinalGrade()
+
+	if actual != "P" {
+		t.Errorf("Expected P, got %s", actual)
+	}
+}
+
+func TestPassFailFail(t *testing.T) {
+	calculator := NewGradeCalculator()
+	calculator.passFail = true
+
+	calculator.AddGrade("Assignment", 50, Assignment)
+	calculator.AddGrade("Exam", 55, Exam)
+	calculator.AddGrade("Essay", 60, Essay)
+
+	actual := calculator.GetFinalGrade()
+
+	if actual != "F" {
+		t.Errorf("Expected F, got %s", actual)
+	}
+}
