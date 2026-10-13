@@ -1,15 +1,11 @@
 package esepunittests
 
 type GradeCalculator struct {
-	grades []Grade
+	grades   []Grade
+	passFail bool
 }
 
 type GradeType int
-
-type GradeCalculator struct {
-    grades   []Grade
-    passFail bool
-}
 
 const (
 	Assignment GradeType = iota
@@ -34,14 +30,22 @@ type Grade struct {
 }
 
 func NewGradeCalculator() *GradeCalculator {
-    return &GradeCalculator{
-        grades:   make([]Grade, 0),
-        passFail: false,
-    }
+	return &GradeCalculator{
+		grades:   make([]Grade, 0),
+		passFail: false,
+	}
 }
 
 func (gc *GradeCalculator) GetFinalGrade() string {
 	numericalGrade := gc.calculateNumericalGrade()
+
+	// A numerical grade of 70 or higher is passing.
+	if gc.passFail {
+		if numericalGrade >= 70 {
+			return "P"
+		}
+		return "F"
+	}
 
 	if numericalGrade >= 90 {
 		return "A"
