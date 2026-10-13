@@ -6,6 +6,11 @@ type GradeCalculator struct {
 
 type GradeType int
 
+type GradeCalculator struct {
+    grades   []Grade
+    passFail bool
+}
+
 const (
 	Assignment GradeType = iota
 	Exam
@@ -29,9 +34,10 @@ type Grade struct {
 }
 
 func NewGradeCalculator() *GradeCalculator {
-	return &GradeCalculator{
-		grades: make([]Grade, 0),
-	}
+    return &GradeCalculator{
+        grades:   make([]Grade, 0),
+        passFail: false,
+    }
 }
 
 func (gc *GradeCalculator) GetFinalGrade() string {
